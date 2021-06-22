@@ -1,25 +1,28 @@
 package com.company.model;
 
 import java.io.File;
+import java.util.TreeSet;
 
 public class PathSize {
-    public long getFolderSize(File folder) throws InterruptedException {
+    public TreeSet<Long> set = new TreeSet<Long>();
+
+    public long getFolderSize(File folder) {
         long length = 0;
         File[] files = folder.listFiles();
-
         int count = files.length;
 
         for (int i = 0; i < count; i++) {
-            Thread.sleep(100);
+
             if (files[i].isFile()) {
                 length += files[i].length();
+
             }
             else {
-                System.out.println(length);
                 length += getFolderSize(files[i]);
+                set.add(length);
             }
-
         }
+        set.add(length);
         return length;
     }
 }
